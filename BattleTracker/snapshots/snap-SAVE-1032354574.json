@@ -1,0 +1,130 @@
+{
+    "ActiveCombatIds": [],
+    "CharCombatState": [],
+    "Characters": {
+        "Elves_Female_High_Player_a3b3ad94-c0cb-41de-75f1-31a0365cbe24": {
+            "Cumulative": {
+                "DamageDealt": 0,
+                "DamageEffective": 0,
+                "DamageOverkill": 0,
+                "DamageTaken": 0,
+                "HealingOthers": 0,
+                "HealingPerformedTotal": 0,
+                "HealingReceivedOthers": 0,
+                "HealingReceivedSelf": 0,
+                "HealingReceivedTotal": 0,
+                "HealingSelf": 0,
+                "HostilesOpposed": 0,
+                "KillingBlows": 0,
+                "RoundsEffective": 0,
+                "RoundsTotal": 0
+            }
+        }
+    },
+    "CombatHistory": [],
+    "CombatRefs": [],
+    "CurrentView": {
+        "currentBattle": {
+            "hostileTotals": [],
+            "hostiles": {
+                "memberIds": []
+            },
+            "party": {
+                "memberIds": []
+            },
+            "partyTotals": []
+        },
+        "metadata": {
+            "currentSaveSnapshotId": "SAVE-1032303119",
+            "generatedAt": "1032354575",
+            "parentSaveSnapshotId": "BOOT-1032283809",
+            "saveLineage": [
+                "BOOT-1032283809",
+                "SAVE-1032303119"
+            ],
+            "schemaVersion": "1.0.0"
+        },
+        "party": {
+            "memberIds": [
+                "Elves_Female_High_Player_a3b3ad94-c0cb-41de-75f1-31a0365cbe24"
+            ]
+        },
+        "partyMembers": {
+            "Elves_Female_High_Player_a3b3ad94-c0cb-41de-75f1-31a0365cbe24": {
+                "cumulative": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0
+                },
+                "currentCombatTotals": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0,
+                    "level": 1
+                },
+                "currentLevelTotals": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0,
+                    "level": 1
+                },
+                "inCombatActive": false,
+                "level": 1,
+                "side": "party"
+            }
+        }
+    },
+    "LevelRefs": [],
+    "ParentSaveSig": "BOOT-1032283809",
+    "PartyMembers": [
+        "Elves_Female_High_Player_a3b3ad94-c0cb-41de-75f1-31a0365cbe24"
+    ],
+    "SaveLineage": [
+        "BOOT-1032283809",
+        "SAVE-1032303119",
+        "SAVE-1032354574"
+    ],
+    "SaveSignature": "SAVE-1032354574",
+    "createdAt": "1032354574",
+    "schemaVersion": "1.0.0",
+    "stateHash": "fnv1a32:bf1798d8"
+}

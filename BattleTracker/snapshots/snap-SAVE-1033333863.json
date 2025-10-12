@@ -1,0 +1,215 @@
+{
+    "ActiveCombatIds": [],
+    "CharCombatState": [],
+    "Characters": {
+        "Elves_Female_High_Player_a3b3ad94-c0cb-41de-75f1-31a0365cbe24": {
+            "Cumulative": {
+                "DamageDealt": 26,
+                "DamageEffective": 14,
+                "DamageOverkill": 12,
+                "DamageTaken": 2,
+                "HealingOthers": 0,
+                "HealingPerformedTotal": 0,
+                "HealingReceivedOthers": 0,
+                "HealingReceivedSelf": 0,
+                "HealingReceivedTotal": 0,
+                "HealingSelf": 0,
+                "HostilesOpposed": 3,
+                "KillingBlows": 2,
+                "RoundsEffective": 2,
+                "RoundsTotal": 2
+            }
+        },
+        "S_Player_Laezel_58a69333-40bf-8358-1d17-fff240d7fb12": {
+            "Cumulative": {
+                "DamageDealt": 13,
+                "DamageEffective": 7,
+                "DamageOverkill": 6,
+                "DamageTaken": 0,
+                "HealingOthers": 0,
+                "HealingPerformedTotal": 0,
+                "HealingReceivedOthers": 0,
+                "HealingReceivedSelf": 0,
+                "HealingReceivedTotal": 0,
+                "HealingSelf": 0,
+                "HostilesOpposed": 3,
+                "KillingBlows": 1,
+                "RoundsEffective": 2,
+                "RoundsTotal": 2
+            }
+        }
+    },
+    "CombatHistory": [
+        "2b5d001f-997b-c6c9-f11d-a7f31af1ac63"
+    ],
+    "CombatRefs": [],
+    "CurrentView": {
+        "currentBattle": {
+            "hostileTotals": [],
+            "hostiles": {
+                "memberIds": []
+            },
+            "party": {
+                "memberIds": []
+            },
+            "partyTotals": []
+        },
+        "metadata": {
+            "currentSaveSnapshotId": "SAVE-1032354574",
+            "generatedAt": "1033333875",
+            "parentSaveSnapshotId": "BOOT-1032283809",
+            "saveLineage": [
+                "BOOT-1032283809",
+                "SAVE-1032303119",
+                "SAVE-1032354574"
+            ],
+            "schemaVersion": "1.0.0"
+        },
+        "party": {
+            "memberIds": [
+                "Elves_Female_High_Player_a3b3ad94-c0cb-41de-75f1-31a0365cbe24",
+                "S_Player_Laezel_58a69333-40bf-8358-1d17-fff240d7fb12"
+            ]
+        },
+        "partyMembers": {
+            "Elves_Female_High_Player_a3b3ad94-c0cb-41de-75f1-31a0365cbe24": {
+                "cumulative": {
+                    "DamageDealt": 26,
+                    "DamageEffective": 14,
+                    "DamageOverkill": 12,
+                    "DamagePerTurnEffective": 13.0,
+                    "DamagePerTurnParticipated": 13.0,
+                    "DamageTaken": 2,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 3,
+                    "KillingBlows": 2,
+                    "RoundsEffective": 2,
+                    "RoundsTotal": 2
+                },
+                "currentCombatTotals": {
+                    "DamageDealt": 26,
+                    "DamageEffective": 14,
+                    "DamageOverkill": 12,
+                    "DamagePerTurnEffective": 13.0,
+                    "DamagePerTurnParticipated": 13.0,
+                    "DamageTaken": 2,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 3,
+                    "KillingBlows": 2,
+                    "RoundsEffective": 2,
+                    "RoundsTotal": 2,
+                    "level": 1
+                },
+                "currentLevelTotals": {
+                    "DamageDealt": 26,
+                    "DamageEffective": 14,
+                    "DamageOverkill": 12,
+                    "DamagePerTurnEffective": 13.0,
+                    "DamagePerTurnParticipated": 13.0,
+                    "DamageTaken": 2,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 3,
+                    "KillingBlows": 2,
+                    "RoundsEffective": 2,
+                    "RoundsTotal": 2,
+                    "level": 1
+                },
+                "inCombatActive": false,
+                "level": 1,
+                "side": "party"
+            },
+            "S_Player_Laezel_58a69333-40bf-8358-1d17-fff240d7fb12": {
+                "cumulative": {
+                    "DamageDealt": 13,
+                    "DamageEffective": 7,
+                    "DamageOverkill": 6,
+                    "DamagePerTurnEffective": 6.5,
+                    "DamagePerTurnParticipated": 6.5,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 3,
+                    "KillingBlows": 1,
+                    "RoundsEffective": 2,
+                    "RoundsTotal": 2
+                },
+                "currentCombatTotals": {
+                    "DamageDealt": 13,
+                    "DamageEffective": 7,
+                    "DamageOverkill": 6,
+                    "DamagePerTurnEffective": 6.5,
+                    "DamagePerTurnParticipated": 6.5,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 3,
+                    "KillingBlows": 1,
+                    "RoundsEffective": 2,
+                    "RoundsTotal": 2,
+                    "level": 1
+                },
+                "currentLevelTotals": {
+                    "DamageDealt": 13,
+                    "DamageEffective": 7,
+                    "DamageOverkill": 6,
+                    "DamagePerTurnEffective": 6.5,
+                    "DamagePerTurnParticipated": 6.5,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 3,
+                    "KillingBlows": 1,
+                    "RoundsEffective": 2,
+                    "RoundsTotal": 2,
+                    "level": 1
+                },
+                "inCombatActive": false,
+                "level": 1,
+                "side": "party"
+            }
+        }
+    },
+    "LevelRefs": [],
+    "ParentSaveSig": "BOOT-1032283809",
+    "PartyMembers": [
+        "Elves_Female_High_Player_a3b3ad94-c0cb-41de-75f1-31a0365cbe24",
+        "S_Player_Laezel_58a69333-40bf-8358-1d17-fff240d7fb12"
+    ],
+    "SaveLineage": [
+        "BOOT-1032283809",
+        "SAVE-1032303119",
+        "SAVE-1032354574",
+        "SAVE-1033333863"
+    ],
+    "SaveSignature": "SAVE-1033333863",
+    "createdAt": "1033333863",
+    "schemaVersion": "1.0.0",
+    "stateHash": "fnv1a32:aa404ca5"
+}

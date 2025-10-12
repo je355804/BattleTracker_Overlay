@@ -1,0 +1,139 @@
+{
+    "activeCombatIds": [],
+    "activeSaveSig": "SAVE-1037799421",
+    "combatHistory": [
+        "9d2fdcb3-192e-09fa-b274-03ad1519bef7"
+    ],
+    "parentSaveSig": "BOOT-1032283809",
+    "partyMembers": [
+        "Elves_Female_High_Player_a3b3ad94-c0cb-41de-75f1-31a0365cbe24",
+        "S_Player_Laezel_58a69333-40bf-8358-1d17-fff240d7fb12"
+    ],
+    "running": {
+        "Elves_Female_High_Player_a3b3ad94-c0cb-41de-75f1-31a0365cbe24": {
+            "Cumulative": {
+                "DamageDealt": 11,
+                "DamageEffective": 7,
+                "DamageOverkill": 4,
+                "DamageTaken": 2,
+                "HealingOthers": 0,
+                "HealingPerformedTotal": 0,
+                "HealingReceivedOthers": 0,
+                "HealingReceivedSelf": 0,
+                "HealingReceivedTotal": 0,
+                "HealingSelf": 0,
+                "HostilesOpposed": 3,
+                "KillingBlows": 1,
+                "RoundsEffective": 2,
+                "RoundsTotal": 2
+            },
+            "PerCombat": {
+                "Active": false,
+                "Level": 1,
+                "RoundsEffective": 2,
+                "RoundsTotal": 2,
+                "Summary": {
+                    "DamageDealt": 11,
+                    "DamageEffective": 7,
+                    "DamageOverkill": 4,
+                    "DamageTaken": 2,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 3,
+                    "KillingBlows": 1,
+                    "RoundsEffective": 2,
+                    "RoundsTotal": 2
+                }
+            },
+            "PerLevel": {
+                "Totals": {
+                    "DamageDealt": 11,
+                    "DamageEffective": 7,
+                    "DamageOverkill": 4,
+                    "DamageTaken": 2,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 3,
+                    "KillingBlows": 1,
+                    "RoundsEffective": 2,
+                    "RoundsTotal": 2
+                },
+                "level": 1
+            }
+        },
+        "S_Player_Laezel_58a69333-40bf-8358-1d17-fff240d7fb12": {
+            "Cumulative": {
+                "DamageDealt": 22,
+                "DamageEffective": 14,
+                "DamageOverkill": 8,
+                "DamageTaken": 0,
+                "HealingOthers": 0,
+                "HealingPerformedTotal": 0,
+                "HealingReceivedOthers": 0,
+                "HealingReceivedSelf": 0,
+                "HealingReceivedTotal": 0,
+                "HealingSelf": 0,
+                "HostilesOpposed": 3,
+                "KillingBlows": 2,
+                "RoundsEffective": 2,
+                "RoundsTotal": 2
+            },
+            "PerCombat": {
+                "Active": false,
+                "Level": 1,
+                "RoundsEffective": 2,
+                "RoundsTotal": 2,
+                "Summary": {
+                    "DamageDealt": 22,
+                    "DamageEffective": 14,
+                    "DamageOverkill": 8,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 3,
+                    "KillingBlows": 2,
+                    "RoundsEffective": 2,
+                    "RoundsTotal": 2
+                }
+            },
+            "PerLevel": {
+                "Totals": {
+                    "DamageDealt": 22,
+                    "DamageEffective": 14,
+                    "DamageOverkill": 8,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 3,
+                    "KillingBlows": 2,
+                    "RoundsEffective": 2,
+                    "RoundsTotal": 2
+                },
+                "level": 1
+            }
+        }
+    },
+    "saveLineage": [
+        "BOOT-1032283809",
+        "SAVE-1032303119",
+        "SAVE-1032354574",
+        "SAVE-1037799421"
+    ],
+    "schemaVersion": "1.0.0"
+}

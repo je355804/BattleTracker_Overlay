@@ -1,0 +1,365 @@
+{
+    "ActiveCombatIds": [],
+    "CharCombatState": [],
+    "Characters": {
+        "S_GLO_CharacterCreationDummy_001_e2badbf0-159a-4ef5-9e73-7bbeb3d1015a": {
+            "Cumulative": {
+                "DamageDealt": 0,
+                "DamageEffective": 0,
+                "DamageOverkill": 0,
+                "DamageTaken": 0,
+                "HealingOthers": 0,
+                "HealingPerformedTotal": 0,
+                "HealingReceivedOthers": 0,
+                "HealingReceivedSelf": 0,
+                "HealingReceivedTotal": 0,
+                "HealingSelf": 0,
+                "HostilesOpposed": 0,
+                "KillingBlows": 0,
+                "RoundsEffective": 0,
+                "RoundsTotal": 0
+            }
+        },
+        "S_GLO_CharacterCreationDummy_002_aa772968-b5e0-4441-8d86-2d0506b4aab5": {
+            "Cumulative": {
+                "DamageDealt": 0,
+                "DamageEffective": 0,
+                "DamageOverkill": 0,
+                "DamageTaken": 0,
+                "HealingOthers": 0,
+                "HealingPerformedTotal": 0,
+                "HealingReceivedOthers": 0,
+                "HealingReceivedSelf": 0,
+                "HealingReceivedTotal": 0,
+                "HealingSelf": 0,
+                "HostilesOpposed": 0,
+                "KillingBlows": 0,
+                "RoundsEffective": 0,
+                "RoundsTotal": 0
+            }
+        },
+        "S_GLO_CharacterCreationDummy_003_81c48711-d7cc-4a3d-9e49-665eb915c15c": {
+            "Cumulative": {
+                "DamageDealt": 0,
+                "DamageEffective": 0,
+                "DamageOverkill": 0,
+                "DamageTaken": 0,
+                "HealingOthers": 0,
+                "HealingPerformedTotal": 0,
+                "HealingReceivedOthers": 0,
+                "HealingReceivedSelf": 0,
+                "HealingReceivedTotal": 0,
+                "HealingSelf": 0,
+                "HostilesOpposed": 0,
+                "KillingBlows": 0,
+                "RoundsEffective": 0,
+                "RoundsTotal": 0
+            }
+        },
+        "S_GLO_CharacterCreationDummy_004_6bff5419-5a9e-4839-acd4-cac4f6e41bd7": {
+            "Cumulative": {
+                "DamageDealt": 0,
+                "DamageEffective": 0,
+                "DamageOverkill": 0,
+                "DamageTaken": 0,
+                "HealingOthers": 0,
+                "HealingPerformedTotal": 0,
+                "HealingReceivedOthers": 0,
+                "HealingReceivedSelf": 0,
+                "HealingReceivedTotal": 0,
+                "HealingSelf": 0,
+                "HostilesOpposed": 0,
+                "KillingBlows": 0,
+                "RoundsEffective": 0,
+                "RoundsTotal": 0
+            }
+        }
+    },
+    "CombatHistory": [],
+    "CombatRefs": [],
+    "CurrentView": {
+        "currentBattle": {
+            "hostileTotals": [],
+            "hostiles": {
+                "memberIds": []
+            },
+            "party": {
+                "memberIds": []
+            },
+            "partyTotals": []
+        },
+        "metadata": {
+            "generatedAt": "1032283810",
+            "saveLineage": [],
+            "schemaVersion": "1.0.0"
+        },
+        "party": {
+            "memberIds": [
+                "S_GLO_CharacterCreationDummy_001_e2badbf0-159a-4ef5-9e73-7bbeb3d1015a",
+                "S_GLO_CharacterCreationDummy_002_aa772968-b5e0-4441-8d86-2d0506b4aab5",
+                "S_GLO_CharacterCreationDummy_003_81c48711-d7cc-4a3d-9e49-665eb915c15c",
+                "S_GLO_CharacterCreationDummy_004_6bff5419-5a9e-4839-acd4-cac4f6e41bd7"
+            ]
+        },
+        "partyMembers": {
+            "S_GLO_CharacterCreationDummy_001_e2badbf0-159a-4ef5-9e73-7bbeb3d1015a": {
+                "cumulative": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0
+                },
+                "currentCombatTotals": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0,
+                    "level": 1
+                },
+                "currentLevelTotals": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0,
+                    "level": 1
+                },
+                "inCombatActive": false,
+                "level": 1,
+                "side": "party"
+            },
+            "S_GLO_CharacterCreationDummy_002_aa772968-b5e0-4441-8d86-2d0506b4aab5": {
+                "cumulative": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0
+                },
+                "currentCombatTotals": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0,
+                    "level": 1
+                },
+                "currentLevelTotals": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0,
+                    "level": 1
+                },
+                "inCombatActive": false,
+                "level": 1,
+                "side": "party"
+            },
+            "S_GLO_CharacterCreationDummy_003_81c48711-d7cc-4a3d-9e49-665eb915c15c": {
+                "cumulative": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0
+                },
+                "currentCombatTotals": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0,
+                    "level": 1
+                },
+                "currentLevelTotals": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0,
+                    "level": 1
+                },
+                "inCombatActive": false,
+                "level": 1,
+                "side": "party"
+            },
+            "S_GLO_CharacterCreationDummy_004_6bff5419-5a9e-4839-acd4-cac4f6e41bd7": {
+                "cumulative": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0
+                },
+                "currentCombatTotals": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0,
+                    "level": 1
+                },
+                "currentLevelTotals": {
+                    "DamageDealt": 0,
+                    "DamageEffective": 0,
+                    "DamageOverkill": 0,
+                    "DamagePerTurnEffective": 0,
+                    "DamagePerTurnParticipated": 0,
+                    "DamageTaken": 0,
+                    "HealingOthers": 0,
+                    "HealingPerformedTotal": 0,
+                    "HealingReceivedOthers": 0,
+                    "HealingReceivedSelf": 0,
+                    "HealingReceivedTotal": 0,
+                    "HealingSelf": 0,
+                    "HostilesOpposed": 0,
+                    "KillingBlows": 0,
+                    "RoundsEffective": 0,
+                    "RoundsTotal": 0,
+                    "level": 1
+                },
+                "inCombatActive": false,
+                "level": 1,
+                "side": "party"
+            }
+        }
+    },
+    "LevelRefs": [],
+    "PartyMembers": [
+        "S_GLO_CharacterCreationDummy_001_e2badbf0-159a-4ef5-9e73-7bbeb3d1015a",
+        "S_GLO_CharacterCreationDummy_002_aa772968-b5e0-4441-8d86-2d0506b4aab5",
+        "S_GLO_CharacterCreationDummy_003_81c48711-d7cc-4a3d-9e49-665eb915c15c",
+        "S_GLO_CharacterCreationDummy_004_6bff5419-5a9e-4839-acd4-cac4f6e41bd7"
+    ],
+    "SaveLineage": [
+        "BOOT-1032283809"
+    ],
+    "SaveSignature": "BOOT-1032283809",
+    "createdAt": "1032283809",
+    "schemaVersion": "1.0.0",
+    "stateHash": "fnv1a32:b0869b38"
+}

@@ -1,0 +1,29 @@
+{
+    "entries": {
+        "BOOT-1032283809": {
+            "snapshotRef": "snap-BOOT-1032283809",
+            "timestamp": "1032283809"
+        },
+        "SAVE-1032303119": {
+            "parentSaveSig": "BOOT-1032283809",
+            "snapshotRef": "snap-SAVE-1032303119",
+            "timestamp": "1032303119"
+        },
+        "SAVE-1032354574": {
+            "parentSaveSig": "BOOT-1032283809",
+            "snapshotRef": "snap-SAVE-1032354574",
+            "timestamp": "1032354574"
+        },
+        "SAVE-1033333863": {
+            "parentSaveSig": "BOOT-1032283809",
+            "snapshotRef": "snap-SAVE-1033333863",
+            "timestamp": "1033333863"
+        },
+        "SAVE-1037799421": {
+            "parentSaveSig": "BOOT-1032283809",
+            "snapshotRef": "snap-SAVE-1037799421",
+            "timestamp": "1037799421"
+        }
+    },
+    "schemaVersion": "1.0.0"
+}
