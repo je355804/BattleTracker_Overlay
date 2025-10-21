@@ -25,5 +25,5 @@ namespace BattleTrackerOverlay
 
     public record MetricSettingSnapshot(string Key, bool IsEnabled, string Header);
 
-    public record SettingsDialogResult(Dictionary<StatScope, List<MetricSettingSnapshot>> ScopeMetrics, double OverlayOpacity);
+    public record SettingsDialogResult(Dictionary<StatScope, List<MetricSettingSnapshot>> ScopeMetrics, double OverlayOpacity, bool UseCompactLayout, int CompactLayoutColumns, double FontSize, List<string> MetricOrder, string Custom1Name, string Custom2Name);
 }

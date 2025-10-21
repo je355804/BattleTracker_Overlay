@@ -33,7 +33,7 @@ namespace BattleTrackerOverlay
         private static readonly DependencyPropertyDescriptor? ColumnWidthDescriptor =
             DependencyPropertyDescriptor.FromProperty(GridViewColumn.WidthProperty, typeof(GridViewColumn));
         private static readonly Dictionary<string, double> ColumnWidthOverrides = new();
-        private const double TabVisibilityThreshold = 300;
+        private const double TabVisibilityThreshold = 360;
 
         [DllImport("gdi32.dll")] static extern IntPtr CreateRoundRectRgn(int left, int top, int right, int bottom, int widthEllipse, int heightEllipse);
         [DllImport("gdi32.dll")] static extern IntPtr CreateEllipticRgn(int left, int top, int right, int bottom);
@@ -60,6 +60,11 @@ namespace BattleTrackerOverlay
 
             Loaded += (_, __) =>
             {
+                // Explicitly set the Tag property for custom tabs to ensure they're set correctly
+                TabCustom1.Tag = StatScope.Custom1;
+                TabCustom2.Tag = StatScope.Custom2;
+                Log.Info($"Custom tab tags set: TabCustom1.Tag={TabCustom1.Tag}, TabCustom2.Tag={TabCustom2.Tag}");
+                
                 Log.Info("Main window loaded; applying collapsed shape and initializing watcher.");
                 ApplyCollapsedShape();
                 InitWatcher();
@@ -341,24 +346,72 @@ namespace BattleTrackerOverlay
             _vm.RefreshMetricCatalog();
 
             var snapshot = _vm.CreateSettingsSnapshot();
-            var vm = new SettingsDialogViewModel(snapshot.ScopeMetrics, snapshot.OverlayOpacity);
+            var vm = new SettingsDialogViewModel(snapshot.ScopeMetrics, snapshot.OverlayOpacity, snapshot.UseCompactLayout, snapshot.CompactLayoutColumns, snapshot.FontSize, snapshot.MetricOrder, snapshot.Custom1Name, snapshot.Custom2Name);
             var dlg = new SettingsWindow { Owner = this, DataContext = vm };
-            if (dlg.ShowDialog() == true)
+            
+            // Subscribe to apply settings without closing
+            dlg.ApplySettings += () =>
             {
                 var result = vm.BuildResult();
                 _vm.ApplySettings(result);
                 Opacity = _vm.OverlayOpacity;
                 BuildTables();
                 _vm.ErrorBanner = "";
-            }
+            };
+            
+            dlg.ShowDialog();
         }
 
         private void Tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // If a custom tab is selected, make the selector appear selected too
+            if (Tabs?.SelectedItem == TabCustom1 || Tabs?.SelectedItem == TabCustom2)
+            {
+                // A custom tab is selected, so also select the selector to keep it highlighted
+                TabCustomSelector.IsSelected = true;
+            }
+            
             BuildTables();
             if (Tabs?.SelectedItem is TabItem tab && tab.Tag is StatScope scope)
             {
                 UpdateScopeTitle(scope);
+            }
+        }
+
+        private void TabCustomSelector_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Prevent the tab from being actually selected
+            e.Handled = true;
+            
+            // Open the popup to show custom tab options
+            CustomTabPopup.IsOpen = true;
+        }
+
+        private void CustomTab1_Click(object sender, RoutedEventArgs e)
+        {
+            CustomTabPopup.IsOpen = false;
+            if (Tabs != null && TabCustomSelector != null)
+            {
+                Log.Info($"CustomTab1_Click: Setting TabCustomSelector.Tag to Custom1");
+                TabCustomSelector.Tag = StatScope.Custom1;
+                // Make sure it's selected
+                Tabs.SelectedItem = TabCustomSelector;
+                UpdateScopeTitle(StatScope.Custom1);
+                BuildTables();
+            }
+        }
+
+        private void CustomTab2_Click(object sender, RoutedEventArgs e)
+        {
+            CustomTabPopup.IsOpen = false;
+            if (Tabs != null && TabCustomSelector != null)
+            {
+                Log.Info($"CustomTab2_Click: Setting TabCustomSelector.Tag to Custom2");
+                TabCustomSelector.Tag = StatScope.Custom2;
+                // Make sure it's selected
+                Tabs.SelectedItem = TabCustomSelector;
+                UpdateScopeTitle(StatScope.Custom2);
+                BuildTables();
             }
         }
         #endregion
@@ -405,11 +458,26 @@ namespace BattleTrackerOverlay
                     return;
                 }
 
+                var wasInCombat = _vm.Root?.PartyMembers.Values.Any(p => p.InCombatActive) ?? false;
+
                 _vm.ErrorBanner = "";
                 _vm.LastWriteTimeUtc = File.GetLastWriteTimeUtc(StatsPath);
                 _vm.Raw = raw!;
                 _vm.Root = root;
                 _vm.RefreshMetricCatalog();
+
+                var isInCombat = _vm.Root.PartyMembers.Values.Any(p => p.InCombatActive);
+                if (isInCombat && !wasInCombat)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        if (Tabs.SelectedIndex != 1)
+                        {
+                            Log.Info("Combat start detected, switching to Current Combat tab.");
+                            Tabs.SelectedIndex = 1;
+                        }
+                    });
+                }
 
                 Log.Info("Stats refresh succeeded.");
                 BuildTables();
@@ -467,23 +535,47 @@ namespace BattleTrackerOverlay
                 }
 
                 var scope = selectedTab.Tag is StatScope typedScope ? typedScope : StatScope.CurrentCombat;
-                Log.Info($"Rendering tables for scope {scope}");
+                Log.Info($"Rendering tables for selected tab '{selectedTab.Name}' with Tag='{selectedTab.Tag}' resolved to scope {scope}");
 
                 UpdateScopeTitle(scope);
                 TablesHost.Children.Add(CreateScopeHeader(scope));
 
+                UIElement content;
                 switch (scope)
                 {
                     case StatScope.CurrentCombat:
-                        TablesHost.Children.Add(BuildListView(StatScope.CurrentCombat, _vm.GetLayout(StatScope.CurrentCombat), _vm.BuildRows_CurrentFight()));
+                        content = _vm.UseCompactLayout
+                            ? BuildCompactLayout(StatScope.CurrentCombat, _vm.GetLayout(StatScope.CurrentCombat), _vm.BuildRows_CurrentFight())
+                            : BuildListView(StatScope.CurrentCombat, _vm.GetLayout(StatScope.CurrentCombat), _vm.BuildRows_CurrentFight());
+                        TablesHost.Children.Add(content);
                         break;
 
                     case StatScope.CurrentLevel:
-                        TablesHost.Children.Add(BuildListView(StatScope.CurrentLevel, _vm.GetLayout(StatScope.CurrentLevel), _vm.BuildRows_CurrentLevel()));
+                        content = _vm.UseCompactLayout
+                            ? BuildCompactLayout(StatScope.CurrentLevel, _vm.GetLayout(StatScope.CurrentLevel), _vm.BuildRows_CurrentLevel())
+                            : BuildListView(StatScope.CurrentLevel, _vm.GetLayout(StatScope.CurrentLevel), _vm.BuildRows_CurrentLevel());
+                        TablesHost.Children.Add(content);
                         break;
 
                     case StatScope.Cumulative:
-                        TablesHost.Children.Add(BuildListView(StatScope.Cumulative, _vm.GetLayout(StatScope.Cumulative), _vm.BuildRows_Cumulative()));
+                        content = _vm.UseCompactLayout
+                            ? BuildCompactLayout(StatScope.Cumulative, _vm.GetLayout(StatScope.Cumulative), _vm.BuildRows_Cumulative())
+                            : BuildListView(StatScope.Cumulative, _vm.GetLayout(StatScope.Cumulative), _vm.BuildRows_Cumulative());
+                        TablesHost.Children.Add(content);
+                        break;
+
+                    case StatScope.Custom1:
+                        content = _vm.UseCompactLayout
+                            ? BuildCompactLayout(StatScope.Custom1, _vm.GetLayout(StatScope.Custom1), _vm.BuildRows_Custom1())
+                            : BuildListView(StatScope.Custom1, _vm.GetLayout(StatScope.Custom1), _vm.BuildRows_Custom1());
+                        TablesHost.Children.Add(content);
+                        break;
+
+                    case StatScope.Custom2:
+                        content = _vm.UseCompactLayout
+                            ? BuildCompactLayout(StatScope.Custom2, _vm.GetLayout(StatScope.Custom2), _vm.BuildRows_Custom2())
+                            : BuildListView(StatScope.Custom2, _vm.GetLayout(StatScope.Custom2), _vm.BuildRows_Custom2());
+                        TablesHost.Children.Add(content);
                         break;
                 }
             }
@@ -582,6 +674,8 @@ namespace BattleTrackerOverlay
                 StatScope.Cumulative => "Cumulative",
                 StatScope.CurrentCombat => "Current Combat",
                 StatScope.CurrentLevel => "Current Level",
+                StatScope.Custom1 => _vm.Custom1Name,
+                StatScope.Custom2 => _vm.Custom2Name,
                 _ => scope.ToString()
             };
         }
@@ -592,6 +686,20 @@ namespace BattleTrackerOverlay
             {
                 Dispatcher.Invoke(() => Opacity = _vm.OverlayOpacity);
             }
+            else if (e.PropertyName == nameof(ViewState.Custom1Name) || e.PropertyName == nameof(ViewState.Custom2Name))
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    // Update header if a custom tab is currently selected
+                    if (Tabs?.SelectedItem is TabItem tab && tab.Tag is StatScope scope)
+                    {
+                        if (scope == StatScope.Custom1 || scope == StatScope.Custom2)
+                        {
+                            UpdateScopeTitle(scope);
+                        }
+                    }
+                });
+            }
         }
 
     private ListView BuildListView(StatScope scope, IReadOnlyList<ViewState.StatField> layout, List<RowItem> rows)
@@ -599,6 +707,9 @@ namespace BattleTrackerOverlay
             var lv = new ListView { ItemsSource = rows, Height = Double.NaN };
             var gv = new GridView();
             lv.View = gv;
+
+            // Hook into column reorder events
+            lv.Loaded += (s, e) => AttachColumnReorderHandler(lv, scope);
 
             void Add(string key, string header, string bind, double? defaultWidth = null, TextAlignment align = TextAlignment.Left)
             {
@@ -637,13 +748,155 @@ namespace BattleTrackerOverlay
                 }
             }
 
+            // Always add Character column first
             Add("Character", "Character", nameof(RowItem.Name), 140, TextAlignment.Left);
-            foreach (var field in layout)
+            
+            // Check if we have a saved column order for this scope
+            if (_vm.ColumnOrder.TryGetValue(scope, out var savedOrder) && savedOrder.Count > 0)
             {
-                Add(field.Key, field.Header, $"Metrics[{field.Key}]", field.Width, field.Alignment);
+                // Apply saved order (skip "Character" which is always first)
+                var orderedFields = new List<ViewState.StatField>();
+                foreach (var key in savedOrder.Skip(1)) // Skip "Character"
+                {
+                    var field = layout.FirstOrDefault(f => f.Key == key);
+                    if (field != null)
+                    {
+                        orderedFields.Add(field);
+                    }
+                }
+                
+                // Add any fields not in the saved order (newly added metrics)
+                foreach (var field in layout)
+                {
+                    if (!savedOrder.Contains(field.Key))
+                    {
+                        orderedFields.Add(field);
+                    }
+                }
+                
+                // Add columns in saved order
+                foreach (var field in orderedFields)
+                {
+                    Add(field.Key, field.Header, $"Metrics[{field.Key}]", field.Width, field.Alignment);
+                }
+            }
+            else
+            {
+                // No saved order, use default layout order
+                foreach (var field in layout)
+                {
+                    Add(field.Key, field.Header, $"Metrics[{field.Key}]", field.Width, field.Alignment);
+                }
             }
 
             return lv;
+        }
+
+        private UIElement BuildCompactLayout(StatScope scope, IReadOnlyList<ViewState.StatField> layout, List<RowItem> rows)
+        {
+            // Create a main container for all character cards
+            var mainPanel = new StackPanel { Orientation = Orientation.Vertical, Margin = new Thickness(0) };
+
+            foreach (var row in rows)
+            {
+                // Create a card for each character
+                var characterBorder = new Border
+                {
+                    Background = (Brush)TryFindResource("Panel") ?? Brushes.Transparent,
+                    BorderBrush = (Brush)TryFindResource("BorderColor") ?? Brushes.Gray,
+                    BorderThickness = new Thickness(1),
+                    CornerRadius = new CornerRadius(8),
+                    Margin = new Thickness(0, 0, 0, 5),
+                    Padding = new Thickness(8, 8, 4, 8)
+                };
+                
+
+                var cardContent = new StackPanel { Orientation = Orientation.Vertical };
+
+                // Character name header
+                var nameHeader = new TextBlock
+                {
+                    Text = row.Name,
+                    FontSize = _vm.FontSize,
+                    FontWeight = FontWeights.Bold,
+                    Foreground = (Brush)TryFindResource("Text") ?? Brushes.White,
+                    Margin = new Thickness(0, 0, 0, 8)
+                };
+                cardContent.Children.Add(nameHeader);
+
+                // Create grid for metrics
+                var metricsGrid = new Grid { Margin = new Thickness(0, 4, 0, 0) };
+                
+                // Calculate how many metrics we have and how to lay them out
+                var metricsList = layout.ToList();
+                var totalMetrics = metricsList.Count;
+                
+                // Layout: fill horizontally first (up to N columns of metric/value pairs)
+                // Then create new rows as needed
+                var maxColumns = _vm.CompactLayoutColumns; // Use setting: 3 or 6 metric/value pairs per row
+                var rowCount = (int)Math.Ceiling(totalMetrics / (double)maxColumns);
+                
+                // Define columns: for each metric/value pair we need 2 columns (label + value)
+                for (int i = 0; i < maxColumns * 2; i++)
+                {
+                    metricsGrid.ColumnDefinitions.Add(new ColumnDefinition 
+                    { 
+                        Width = i % 2 == 0 ? GridLength.Auto : new GridLength(1, GridUnitType.Star)
+                    });
+                }
+                
+                // Define rows
+                for (int i = 0; i < rowCount; i++)
+                {
+                    metricsGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                }
+
+                // Fill in the metrics
+                for (int i = 0; i < metricsList.Count; i++)
+                {
+                    var field = metricsList[i];
+                    var metricValue = row.Metrics.TryGetValue(field.Key, out var val) ? val : "-";
+                    
+                    // Calculate position
+                    var gridRow = i / maxColumns;
+                    var gridColPair = i % maxColumns;
+                    var labelCol = gridColPair * 2;
+                    var valueCol = gridColPair * 2 + 1;
+                    
+                    // Metric label
+                    var label = new TextBlock
+                    {
+                        Text = field.Header + ":",
+                        Foreground = (Brush)TryFindResource("DimText") ?? Brushes.Gray,
+                        FontSize = _vm.FontSize,
+                        Margin = new Thickness(0, 2, 8, 2),
+                        VerticalAlignment = VerticalAlignment.Center
+                    };
+                    Grid.SetRow(label, gridRow);
+                    Grid.SetColumn(label, labelCol);
+                    metricsGrid.Children.Add(label);
+                    
+                    // Metric value
+                    var value = new TextBlock
+                    {
+                        Text = metricValue,
+                        Foreground = (Brush)TryFindResource("Text") ?? Brushes.White,
+                        FontSize = _vm.FontSize,
+                        FontWeight = FontWeights.SemiBold,
+                        Margin = new Thickness(0, 2, 16, 2),
+                        VerticalAlignment = VerticalAlignment.Center
+                    };
+                    Grid.SetRow(value, gridRow);
+                    Grid.SetColumn(value, valueCol);
+                    metricsGrid.Children.Add(value);
+                }
+
+                cardContent.Children.Add(metricsGrid);
+                characterBorder.Child = cardContent;
+                mainPanel.Children.Add(characterBorder);
+            }
+
+            return mainPanel;
         }
 
         private static void TrackColumnWidth(GridViewColumn column, string key)
@@ -667,6 +920,43 @@ namespace BattleTrackerOverlay
         }
 
         private static string ColumnKey(StatScope scope, string key) => $"{scope}:{key}";
+
+        private void AttachColumnReorderHandler(ListView listView, StatScope scope)
+        {
+            if (listView.View is not GridView gridView) return;
+
+            // Find the GridViewHeaderRowPresenter in the visual tree
+            listView.AddHandler(System.Windows.Controls.Primitives.Thumb.DragCompletedEvent, 
+                new System.Windows.Controls.Primitives.DragCompletedEventHandler((sender, e) =>
+                {
+                    // Extract current column order after drag is complete
+                    var columnOrder = new List<string>();
+                    columnOrder.Add("Character"); // Character column is always first
+                    
+                    foreach (var col in gridView.Columns.Skip(1)) // Skip the Character column
+                    {
+                        if (col.Header is string header)
+                        {
+                            // Find the key that matches this header
+                            var matchingField = _vm.GetLayout(scope).FirstOrDefault(f => f.Header == header);
+                            if (matchingField != null)
+                            {
+                                columnOrder.Add(matchingField.Key);
+                            }
+                        }
+                    }
+
+                    // Save the order and trigger persistence
+                    _vm.ColumnOrder[scope] = columnOrder;
+                    // Trigger save via ApplySettings with current snapshot
+                    Dispatcher.BeginInvoke(() =>
+                    {
+                        var snapshot = _vm.CreateSettingsSnapshot();
+                        _vm.ApplySettings(snapshot, persist: true);
+                    });
+                }));
+        }
+
         #endregion
     }
 
@@ -731,13 +1021,64 @@ namespace BattleTrackerOverlay
             [StatScope.CurrentCombat] = ScopeSettings.CreateDefault(new[] { "DamageDealt", "DamageTaken", "HealingSelf", "HealingOthers", "RoundsTotal" }, GetDefaultHeader),
             [StatScope.CurrentLevel] = ScopeSettings.CreateDefault(new[] { "DamageDealt", "DamageTaken", "HealingSelf", "HealingOthers", "RoundsTotal" }, GetDefaultHeader),
             [StatScope.Cumulative] = ScopeSettings.CreateDefault(new[] { "DamageDealt", "DamageTaken", "HealingSelf", "HealingOthers", "RoundsTotal" }, GetDefaultHeader),
+            [StatScope.Custom1] = ScopeSettings.CreateDefault(new[] { "DamageDealt", "DamageTaken" }, GetDefaultHeader),
+            [StatScope.Custom2] = ScopeSettings.CreateDefault(new[] { "DamageDealt", "DamageTaken" }, GetDefaultHeader),
         };
 
         private double _overlayOpacity = 0.9;
         public double OverlayOpacity
         {
             get => _overlayOpacity;
-            set => Set(ref _overlayOpacity, Math.Clamp(value, 0.2, 1.0));
+            set => Set(ref _overlayOpacity, Math.Clamp(value, 0.5, 1.0));
+        }
+
+        private bool _useCompactLayout = false;
+        public bool UseCompactLayout
+        {
+            get => _useCompactLayout;
+            set => Set(ref _useCompactLayout, value);
+        }
+
+        private int _compactLayoutColumns = 3;
+        public int CompactLayoutColumns
+        {
+            get => _compactLayoutColumns;
+            set => Set(ref _compactLayoutColumns, value);
+        }
+
+        private List<string> _metricOrder = new();
+        public List<string> MetricOrder
+        {
+            get => _metricOrder;
+            set => Set(ref _metricOrder, value ?? new List<string>());
+        }
+
+        private double _fontSize = 12.0;
+        public double FontSize
+        {
+            get => _fontSize;
+            set => Set(ref _fontSize, value);
+        }
+
+        private string _custom1Name = "Custom 1";
+        public string Custom1Name
+        {
+            get => _custom1Name;
+            set => Set(ref _custom1Name, value);
+        }
+
+        private string _custom2Name = "Custom 2";
+        public string Custom2Name
+        {
+            get => _custom2Name;
+            set => Set(ref _custom2Name, value);
+        }
+
+        private Dictionary<StatScope, List<string>> _columnOrder = new();
+        public Dictionary<StatScope, List<string>> ColumnOrder
+        {
+            get => _columnOrder;
+            set => Set(ref _columnOrder, value ?? new Dictionary<StatScope, List<string>>());
         }
 
         private record PartySlot(string Key, string? DisplayOverride = null);
@@ -867,7 +1208,7 @@ namespace BattleTrackerOverlay
             return slots;
         }
 
-    internal IReadOnlyList<StatField> GetLayout(StatScope scope) => _scopeSettings[scope].GetActiveFields();
+    internal IReadOnlyList<StatField> GetLayout(StatScope scope) => _scopeSettings[scope].GetActiveFields(MetricOrder);
 
         private List<RowItem> BuildRowsForScope(StatScope scope, Func<PartyMember?, StatTotals?> selector)
         {
@@ -884,6 +1225,8 @@ namespace BattleTrackerOverlay
         public List<RowItem> BuildRows_CurrentFight() => BuildRowsForScope(StatScope.CurrentCombat, m => m?.CurrentCombatTotals);
         public List<RowItem> BuildRows_CurrentLevel() => BuildRowsForScope(StatScope.CurrentLevel, m => m?.CurrentLevelTotals);
         public List<RowItem> BuildRows_Cumulative() => BuildRowsForScope(StatScope.Cumulative, m => m?.Cumulative);
+        public List<RowItem> BuildRows_Custom1() => BuildRowsForScope(StatScope.Custom1, m => m?.Cumulative);
+        public List<RowItem> BuildRows_Custom2() => BuildRowsForScope(StatScope.Custom2, m => m?.Cumulative);
 
         public void RefreshMetricCatalog()
         {
@@ -894,6 +1237,9 @@ namespace BattleTrackerOverlay
                 RegisterMetrics(StatScope.CurrentCombat, member.CurrentCombatTotals);
                 RegisterMetrics(StatScope.CurrentLevel, member.CurrentLevelTotals);
                 RegisterMetrics(StatScope.Cumulative, member.Cumulative);
+                // Custom tabs use cumulative data source but maintain their own metric selections
+                RegisterMetrics(StatScope.Custom1, member.Cumulative);
+                RegisterMetrics(StatScope.Custom2, member.Cumulative);
             }
         }
 
@@ -909,7 +1255,7 @@ namespace BattleTrackerOverlay
         public SettingsDialogResult CreateSettingsSnapshot()
         {
             var metrics = _scopeSettings.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToSnapshot());
-            return new SettingsDialogResult(metrics, OverlayOpacity);
+            return new SettingsDialogResult(metrics, OverlayOpacity, UseCompactLayout, CompactLayoutColumns, FontSize, MetricOrder, Custom1Name, Custom2Name);
         }
 
         public void ApplySettings(SettingsDialogResult result, bool persist = true)
@@ -923,6 +1269,12 @@ namespace BattleTrackerOverlay
             }
 
             OverlayOpacity = result.OverlayOpacity;
+            UseCompactLayout = result.UseCompactLayout;
+            CompactLayoutColumns = result.CompactLayoutColumns;
+            FontSize = result.FontSize;
+            MetricOrder = result.MetricOrder;
+            Custom1Name = result.Custom1Name;
+            Custom2Name = result.Custom2Name;
 
             if (persist)
             {
@@ -968,10 +1320,35 @@ namespace BattleTrackerOverlay
                 return added;
             }
 
-            public IReadOnlyList<StatField> GetActiveFields()
+            public IReadOnlyList<StatField> GetActiveFields(List<string> metricOrder)
             {
-                return _ordered
-                    .Where(s => s.Enabled)
+                var enabled = _ordered.Where(s => s.Enabled).ToList();
+                
+                // If we have a saved order, apply it
+                if (metricOrder != null && metricOrder.Count > 0)
+                {
+                    var orderedFields = new List<StatField>();
+                    foreach (var key in metricOrder)
+                    {
+                        var field = enabled.FirstOrDefault(s => s.Key == key);
+                        if (field != null)
+                        {
+                            orderedFields.Add(new StatField(field.Key, field.Header, null, TextAlignment.Right));
+                        }
+                    }
+                    // Add any enabled fields not in the order list (newly added metrics)
+                    foreach (var field in enabled)
+                    {
+                        if (!metricOrder.Contains(field.Key))
+                        {
+                            orderedFields.Add(new StatField(field.Key, field.Header, null, TextAlignment.Right));
+                        }
+                    }
+                    return orderedFields;
+                }
+                
+                // Default: use _ordered as-is
+                return enabled
                     .Select(s => new StatField(s.Key, s.Header, null, TextAlignment.Right))
                     .ToList();
             }
@@ -1030,7 +1407,14 @@ namespace BattleTrackerOverlay
                 var payload = new SettingsFile
                 {
                     Scopes = snapshot.ScopeMetrics.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value),
-                    OverlayOpacity = snapshot.OverlayOpacity
+                    OverlayOpacity = snapshot.OverlayOpacity,
+                    UseCompactLayout = snapshot.UseCompactLayout,
+                    CompactLayoutColumns = snapshot.CompactLayoutColumns,
+                    FontSize = snapshot.FontSize,
+                    MetricOrder = snapshot.MetricOrder,
+                    ColumnOrder = ColumnOrder.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value),
+                    Custom1Name = snapshot.Custom1Name,
+                    Custom2Name = snapshot.Custom2Name
                 };
 
                 var directory = Path.GetDirectoryName(SettingsFilePath);
@@ -1070,7 +1454,28 @@ namespace BattleTrackerOverlay
                 }
 
                 var opacity = payload.OverlayOpacity ?? OverlayOpacity;
-                var result = new SettingsDialogResult(snapshot, opacity);
+                var compactLayout = payload.UseCompactLayout ?? UseCompactLayout;
+                var compactColumns = payload.CompactLayoutColumns ?? CompactLayoutColumns;
+                var fontSize = payload.FontSize ?? FontSize;
+                var metricOrder = payload.MetricOrder ?? MetricOrder;
+                var custom1Name = payload.Custom1Name ?? Custom1Name;
+                var custom2Name = payload.Custom2Name ?? Custom2Name;
+                
+                // Load column order
+                if (payload.ColumnOrder != null)
+                {
+                    var columnOrder = new Dictionary<StatScope, List<string>>();
+                    foreach (var kvp in payload.ColumnOrder)
+                    {
+                        if (Enum.TryParse(kvp.Key, out StatScope scope))
+                        {
+                            columnOrder[scope] = kvp.Value ?? new List<string>();
+                        }
+                    }
+                    ColumnOrder = columnOrder;
+                }
+                
+                var result = new SettingsDialogResult(snapshot, opacity, compactLayout, compactColumns, fontSize, metricOrder, custom1Name, custom2Name);
                 ApplySettings(result, persist: false);
             }
             catch (Exception ex)
@@ -1083,6 +1488,13 @@ namespace BattleTrackerOverlay
         {
             public Dictionary<string, List<MetricSettingSnapshot>> Scopes { get; set; } = new();
             public double? OverlayOpacity { get; set; }
+            public bool? UseCompactLayout { get; set; }
+            public int? CompactLayoutColumns { get; set; }
+            public double? FontSize { get; set; }
+            public List<string>? MetricOrder { get; set; }
+            public Dictionary<string, List<string>>? ColumnOrder { get; set; }
+            public string? Custom1Name { get; set; }
+            public string? Custom2Name { get; set; }
         }
     }
 }

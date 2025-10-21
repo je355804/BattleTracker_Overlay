@@ -21,4 +21,25 @@ namespace BattleTrackerOverlay
             throw new NotImplementedException();
         }
     }
+
+    public class IntToBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is int intValue && parameter is string strParam && int.TryParse(strParam, out var compareValue))
+            {
+                return intValue == compareValue;
+            }
+            return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool boolValue && boolValue && parameter is string strParam && int.TryParse(strParam, out var intValue))
+            {
+                return intValue;
+            }
+            return Binding.DoNothing;
+        }
+    }
 }

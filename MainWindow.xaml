@@ -15,27 +15,48 @@
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                                <Grid Width="{TemplateBinding Width}"
-                                                            Height="{TemplateBinding Height}"
-                                                            ClipToBounds="True">
-                                                        <Ellipse Fill="#FF000000"
-                                                                         Width="{TemplateBinding Width}"
-                                                                         Height="{TemplateBinding Height}"
-                                                                         Stretch="Fill"/>
-                                                        <Viewbox Margin="0"
-                                                                         Stretch="Uniform"
-                                                                         HorizontalAlignment="Center"
-                                                                         VerticalAlignment="Center">
-                                                                <Image x:Name="Icon"
-                                                                             Source="pack://application:,,,/BattleTrackerOverlay;component/Assets/BT_LOGO.png"
-                                                                             RenderOptions.BitmapScalingMode="HighQuality"
-                                                                             SnapsToDevicePixels="True"/>
-                                                        </Viewbox>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Width="{TemplateBinding Width}"
+                              Height="{TemplateBinding Height}"
+                              ClipToBounds="True">
+                            <!-- Subtle persistent glow ring -->
+                            <Ellipse x:Name="GlowRing"
+                                     Fill="Transparent"
+                                     Width="{TemplateBinding Width}"
+                                     Height="{TemplateBinding Height}"
+                                     Stretch="Fill">
+                                <Ellipse.Effect>
+                                    <DropShadowEffect ShadowDepth="0" 
+                                                      Color="White" 
+                                                      BlurRadius="12" 
+                                                      Opacity="0.25"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
+                            <Ellipse Fill="Transparent"
+                                     Width="{TemplateBinding Width}"
+                                     Height="{TemplateBinding Height}"
+                                     Stretch="Fill"/>
+                            <Viewbox Margin="0,2"
+                                     Stretch="Uniform"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center">
+                                <Image x:Name="Icon"
+                                       Source="pack://application:,,,/BattleTrackerOverlay;component/Assets/btv4_logo.png"
+                                       RenderOptions.BitmapScalingMode="HighQuality"
+                                       SnapsToDevicePixels="True"/>
+                            </Viewbox>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/BattleTrackerOverlay;component/Assets/BT_LOGO.png" />
+                                <Setter TargetName="Icon" Property="Source" Value="pack://application:,,,/BattleTrackerOverlay;component/Assets/btv4_logo.png" />
+                                <Setter TargetName="GlowRing" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="0" 
+                                                          Color="White" 
+                                                          BlurRadius="20" 
+                                                          Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -48,6 +69,7 @@
             <Setter Property="Foreground" Value="{StaticResource DimText}"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="32"/>
             <Setter Property="Margin" Value="0,0,10,0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -57,7 +79,7 @@
                         <Border x:Name="Root"
                                 Background="Transparent"
                                 CornerRadius="6"
-                                Padding="10,4">
+                                Padding="7,4">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -101,47 +123,47 @@
 
             <Grid Margin="8">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="24"/>
+                    <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Background="{StaticResource PanelAlt}" CornerRadius="8,8,0,0">
+                <Border Grid.Row="0" Background="{StaticResource PanelAlt}" CornerRadius="8,8,0,0"
+                        MouseLeftButtonDown="DragArea_MouseLeftButtonDown"
+                        MouseLeftButtonUp="DragArea_MouseLeftButtonUp"
+                        MouseMove="DragArea_MouseMove"
+                        Cursor="Hand">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Text area with drag functionality -->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0"
-                                   MouseLeftButtonDown="DragArea_MouseLeftButtonDown"
-                                   MouseLeftButtonUp="DragArea_MouseLeftButtonUp"
-                                   MouseMove="DragArea_MouseMove"
-                                   Background="Transparent" Cursor="Hand">
+                        <!-- Text area -->
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0">
                             <TextBlock Text="BattleTrackerv4" FontWeight="SemiBold" FontSize="14"/>
                             <TextBlock Text=" • " FontSize="12" Margin="6,0"/>
-                            <TextBlock x:Name="HeaderScopeLabel" Foreground="{StaticResource DimText}" FontSize="12"/>
+                            <TextBlock x:Name="HeaderScopeLabel" Foreground="{StaticResource DimText}" FontSize="14" FontWeight="Bold"/>
                             <TextBlock Text="{Binding ErrorBanner}" Foreground="#FFB366" Margin="12,0,0,0" FontSize="12"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0" >
                             <Button Style="{StaticResource IconButton}" Click="Gear_Click" ToolTip="Settings">
-                                <Image Source="pack://application:,,,/BattleTrackerOverlay;component/Assets/GEAR.png" Width="20" Height="20" Stretch="Uniform"/>
+                                <Image Source="pack://application:,,,/BattleTrackerOverlay;component/Assets/gear_1.png" Width="15" Height="15" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
                             </Button>
                             <Button Style="{StaticResource IconButton}" Click="Minimize_Click" ToolTip="Collapse" Margin="4,0,0,0">
-                                <Image Source="pack://application:,,,/BattleTrackerOverlay;component/Assets/minimize.png" Width="20" Height="20" Stretch="Uniform"/>
+                                <Image Source="pack://application:,,,/BattleTrackerOverlay;component/Assets/min_1.png" Width="15" Height="15" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
                             </Button>
                             <Button Style="{StaticResource IconButton}" Click="Close_Click" ToolTip="Close" Margin="4,0,0,0">
-                                <Image Source="pack://application:,,,/BattleTrackerOverlay;component/Assets/x.png" Width="20" Height="20" Stretch="Uniform"/>
+                                <Image Source="pack://application:,,,/BattleTrackerOverlay;component/Assets/x_1.png" Width="15" Height="15" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
                             </Button>
                         </StackPanel>
                     </Grid>
                 </Border>
 
-                <Grid Grid.Row="1" Margin="0,10">
-                    <TabControl x:Name="Tabs" BorderThickness="0" Background="Transparent"
+                <Grid Grid.Row="1">
+                    <TabControl x:Name="Tabs" BorderThickness="0" Background="Transparent" Margin="0,0,0,0"
                                 SelectionChanged="Tabs_SelectionChanged">
                         
                         <TabControl.ItemsPanel>
@@ -165,11 +187,109 @@
                                 <Image Source="pack://application:,,,/BattleTrackerOverlay;component/Assets/Level.png" ToolTip="Current Level" Width="32" Height="32" Stretch="Uniform"/>
                             </TabItem.Header>
                         </TabItem>
+                        
+                        <!-- Custom Button as TabItem -->
+                        <TabItem x:Name="TabCustomSelector" PreviewMouseLeftButtonDown="TabCustomSelector_PreviewMouseLeftButtonDown">
+                            <TabItem.Header>
+                                <Image x:Name="CustomTabImage" Source="pack://application:,,,/BattleTrackerOverlay;component/Assets/custom_button.png" ToolTip="Custom Views" Width="32" Height="32" Stretch="Uniform"/>
+                            </TabItem.Header>
+                        </TabItem>
+                        
+                        <!-- Hidden Custom Tabs - empty headers with 0 width -->
+                        <TabItem x:Name="TabCustom1" Tag="{x:Static local:StatScope.Custom1}">
+                            <TabItem.Header>
+                                <Border Width="0" Height="0"/>
+                            </TabItem.Header>
+                        </TabItem>
+                        <TabItem x:Name="TabCustom2" Tag="{x:Static local:StatScope.Custom2}">
+                            <TabItem.Header>
+                                <Border Width="0" Height="0"/>
+                            </TabItem.Header>
+                        </TabItem>
                     </TabControl>
+                    
+                    <!-- Custom Tab Selector Popup -->
+                    <Popup x:Name="CustomTabPopup"
+                           PlacementTarget="{Binding ElementName=TabCustomSelector}"
+                           Placement="Bottom"
+                           StaysOpen="False"
+                           AllowsTransparency="True">
+                        <Border Background="{StaticResource Panel}"
+                                BorderBrush="{StaticResource BorderColor}"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                Padding="4">
+                            <StackPanel>
+                                <Button Content="{Binding Custom1Name}"
+                                        Click="CustomTab1_Click"
+                                        Background="{StaticResource PanelAlt}"
+                                        Foreground="{StaticResource Text}"
+                                        BorderThickness="0"
+                                        Padding="12,6"
+                                        HorizontalContentAlignment="Left"
+                                        Cursor="Hand">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border x:Name="border"
+                                                                Background="{TemplateBinding Background}"
+                                                                Padding="{TemplateBinding Padding}"
+                                                                CornerRadius="2">
+                                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="border" Property="Background" Value="{StaticResource RowHover}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Content="{Binding Custom2Name}"
+                                        Click="CustomTab2_Click"
+                                        Background="{StaticResource PanelAlt}"
+                                        Foreground="{StaticResource Text}"
+                                        BorderThickness="0"
+                                        Padding="12,6"
+                                        HorizontalContentAlignment="Left"
+                                        Cursor="Hand"
+                                        Margin="0,2,0,0">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border x:Name="border"
+                                                                Background="{TemplateBinding Background}"
+                                                                Padding="{TemplateBinding Padding}"
+                                                                CornerRadius="2">
+                                                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="border" Property="Background" Value="{StaticResource RowHover}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
                 </Grid>
 
                 <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="TablesHost" />
+                    <StackPanel x:Name="TablesHost" Margin="0,0,5,0" />
                 </ScrollViewer>
 
                 

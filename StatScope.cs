@@ -5,5 +5,7 @@ namespace BattleTrackerOverlay
         CurrentCombat,
         CurrentLevel,
         Cumulative,
+        Custom1,
+        Custom2,
     }
 }
